@@ -44,19 +44,6 @@ else
     echo "oh-my-zsh is already installed."
 fi
 
-# Install oh-my-tmux if not already installed
-TMUX_PATH="$HOME/tmux"
-if [ ! -d "$TMUX_PATH" ]; then
-    echo "Installing oh-my-tmux!"
-    git clone --single-branch https://github.com/gpakosz/.tmux.git "$TMUX_PATH"
-    mkdir -p ~/.config/tmux
-    ln -sf "$TMUX_PATH/.tmux.conf" ~/.config/tmux/tmux.conf
-    cp "$TMUX_PATH/.tmux.conf.local" ~/.config/tmux/tmux.conf.local
-    echo "Installed oh-my-tmux!"
-else
-    echo "oh-my-tmux is already installed."
-fi
-
 # Determine the correct dotfiles path
 # If this script is in the dotfiles directory, use its parent directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
