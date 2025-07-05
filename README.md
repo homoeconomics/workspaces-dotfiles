@@ -18,5 +18,15 @@ Commit the changes, push and supply the url of the repository to the `--dotfiles
 parameter the next time you create a workspace.  This can also be persisted in the
 workspaces configuration file.
 
+## Ubuntu Compatibility Note
+
+The `install.sh` script has been updated to work on Ubuntu machines. However, please note that some of the aliases and configurations in the dotfiles (particularly in `.mix-aliases` and `.mix-exports`) are macOS-specific and may not work on Ubuntu. You may want to review and modify these files to remove or replace macOS-specific commands with Ubuntu-equivalent commands if you're primarily using Ubuntu workspaces.
+
+Some examples of macOS-specific commands in the dotfiles:
+- `pbcopy` (use `xclip` or `xsel` on Ubuntu)
+- `defaults write` commands for macOS preferences
+- Homebrew-related commands and paths
+- macOS-specific paths like `/System/Library/...`
+
 See [Getting Started with Workspaces Personalization](https://datadoghq.atlassian.net/wiki/spaces/DEVX/pages/3068528729/Getting+Started+with+Workspaces+Personalization)
 for details.
