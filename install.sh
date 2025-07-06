@@ -16,45 +16,55 @@
 
 set -euo pipefail
 
-# Function to install packages if they're not already installed
-install_package() {
-    if ! dpkg -l "$1" &> /dev/null; then
-        echo "Installing $1..."
-        sudo apt-get install -y "$1"
-    else
-        echo "$1 is already installed."
+# Install antigen if not already installed
+ANTIGEN_DIR="$HOME/.antigen"
+if [ ! -f "$ANTIGEN_DIR/antigen.zsh" ]; then
+    echo "Installing antigen..."
+    mkdir -p "$ANTIGEN_DIR"
+
+    # Download antigen from the source
+    if ! curl -fsSL git.io/antigen -o "$ANTIGEN_DIR/antigen.zsh.tmp"; then
+        echo "Error: Failed to download antigen from git.io. Aborting antigen installation."
+        rm -f "$ANTIGEN_DIR/antigen.zsh.tmp"
+        exit 1
     fi
-}
 
-# Update package lists
-echo "Updating package lists..."
-sudo apt-get update
-
-# Install required packages
-install_package curl
-install_package git
-install_package zsh
-
-# Install oh-my-zsh if not already installed
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    echo "Installing oh-my-zsh!"
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-    echo "Installed oh-my-zsh!"
+    # Verify the file is not empty
+    if [ -s "$ANTIGEN_DIR/antigen.zsh.tmp" ]; then
+        mv "$ANTIGEN_DIR/antigen.zsh.tmp" "$ANTIGEN_DIR/antigen.zsh"
+        echo "Antigen installed successfully."
+    else
+        echo "Error: Downloaded antigen file is empty. Aborting antigen installation."
+        rm -f "$ANTIGEN_DIR/antigen.zsh.tmp"
+        exit 1
+    fi
 else
-    echo "oh-my-zsh is already installed."
+    echo "Antigen is already installed."
 fi
 
-# Determine the correct dotfiles path
-# If this script is in the dotfiles directory, use its parent directory
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-if [ -f "$SCRIPT_DIR/.zshrc" ] && [ -f "$SCRIPT_DIR/.mix-aliases" ]; then
-    DOTFILES_PATH="$SCRIPT_DIR"
-else
-    # Fall back to the default location
-    DOTFILES_PATH="$HOME/dotfiles"
-fi
+# Define dotfiles path
+DOTFILES_PATH="$HOME/dotfiles"
 
-echo "Using dotfiles from: $DOTFILES_PATH"
+# Download .tmux.conf from gpakosz/.tmux repository
+echo "Downloading .tmux.conf from gpakosz/.tmux repository..."
+TMUX_CONF_URL="https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf"
+TMUX_CONF_PATH="$DOTFILES_PATH/.tmux.conf"
+
+if ! curl -fsSL "$TMUX_CONF_URL" -o "$TMUX_CONF_PATH.tmp"; then
+    echo "Error: Failed to download .tmux.conf from GitHub. Keeping existing file if present."
+    rm -f "$TMUX_CONF_PATH.tmp"
+    exit 1
+else
+    # Verify the file is not empty
+    if [ -s "$TMUX_CONF_PATH.tmp" ]; then
+        mv "$TMUX_CONF_PATH.tmp" "$TMUX_CONF_PATH"
+        echo ".tmux.conf downloaded successfully."
+    else
+        echo "Error: Downloaded .tmux.conf file is empty. Keeping existing file if present."
+        rm -f "$TMUX_CONF_PATH.tmp"
+        exit 1
+    fi
+fi
 
 # Symlink dotfiles to the root within your workspace
 echo "Symlinking dotfiles!"
@@ -66,10 +76,3 @@ while read df; do
     echo "Linked: $df -> $link"
 done
 echo "Symlinked dotfiles!"
-
-# Set zsh as the default shell if it's not already
-if [ "$SHELL" != "$(which zsh)" ]; then
-    echo "Setting zsh as the default shell..."
-    chsh -s "$(which zsh)"
-    echo "Zsh is now the default shell. Please log out and log back in for changes to take effect."
-fi

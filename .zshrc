@@ -1,13 +1,6 @@
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH"
 
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
-
-# Set name of the OhMyZSH theme to load.
-# Look in ~/.oh-my-zsh/themes/
-ZSH_THEME="dstufft"
-
 
 # Load the shell dotfiles, and then some:
 # * ~/.mix-path can be used to extend `$PATH`.
@@ -50,6 +43,29 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # plugins=(git brew bundler capistrano cloudapp composer gem laravel npm rvm bower sublime)
-plugins=(git zsh-syntax-highlighting vi-mode tmux, z, zsh-autosuggestions)
 
-source $ZSH/oh-my-zsh.sh
+# antigen
+source $HOME/.antigen/antigen.zsh
+
+# Load the oh-my-zsh's library.
+antigen use oh-my-zsh
+
+# Bundles from the default repo (robbyrussell's oh-my-zsh).
+antigen bundle git
+antigen bundle vi-mode
+antigen bundle tmux
+antigen bundle z
+antigen bundle pip
+antigen bundle lein
+antigen bundle command-not-found
+
+# Syntax highlighting bundle.
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle "MichaelAquilina/zsh-you-should-use"
+
+# Load the theme.
+antigen theme agnoster
+
+# Tell Antigen that you're done.
+antigen apply
