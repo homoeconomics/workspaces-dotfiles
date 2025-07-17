@@ -16,6 +16,18 @@
 
 set -euo pipefail
 
+echo "Installing dependencies..."
+sudo apt-get update
+sudo apt-get install build-essential procps curl file git
+
+echo "Installing homebrew..."
+NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+echo "Installing fzf"
+brew update
+brew install fzf
+
 # Install antigen if not already installed
 ANTIGEN_DIR="$HOME/.antigen"
 if [ ! -f "$ANTIGEN_DIR/antigen.zsh" ]; then
@@ -66,13 +78,22 @@ else
     fi
 fi
 
-# Symlink dotfiles to the root within your workspace
-echo "Symlinking dotfiles!"
+# Symlink dotfiles to the root within your workspace or append content if file exists
+echo "Processing dotfiles!"
 find "$DOTFILES_PATH" -type f -path "$DOTFILES_PATH/.*" | grep -v "/.git/" | grep -v "/.git$" |
 while read df; do
     link=${df/$DOTFILES_PATH/$HOME}
     mkdir -p "$(dirname "$link")"
-    ln -sf "$df" "$link"
-    echo "Linked: $df -> $link"
+
+    # Check if the target file already exists and is not a symlink
+    if [ -f "$link" ] && [ ! -L "$link" ]; then
+        # Append content to the existing file
+        echo "Appending content from $df to existing file $link"
+        cat "$df" >> "$link"
+    else
+        # Create a symlink if the file doesn't exist or is already a symlink
+        ln -sf "$df" "$link"
+        echo "Linked: $df -> $link"
+    fi
 done
-echo "Symlinked dotfiles!"
+echo "Processed dotfiles!"
