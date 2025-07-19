@@ -40,6 +40,9 @@ COMPLETION_WAITING_DOTS="true"
 # Homebrew
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
+# fzf shell integration
+source <(fzf --zsh)
+
 # --- PLUGINS ----------------------------------
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
