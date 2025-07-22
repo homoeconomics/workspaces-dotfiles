@@ -20,8 +20,12 @@ echo "Installing dependencies..."
 sudo apt-get update
 sudo apt-get install build-essential procps curl file git
 
-echo "Installing homebrew..."
-NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+if [ ! -d /home/linuxbrew ]; then
+    echo "Installing homebrew..."
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+    echo "Homebrew is already installed."
+fi
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 echo "Installing fzf"
@@ -54,30 +58,24 @@ else
     echo "Antigen is already installed."
 fi
 
-# Define dotfiles path
-DOTFILES_PATH="$HOME/dotfiles"
-
-# Download .tmux.conf from gpakosz/.tmux repository
-echo "Downloading .tmux.conf from gpakosz/.tmux repository..."
-TMUX_CONF_URL="https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf"
-TMUX_CONF_PATH="$DOTFILES_PATH/.tmux.conf"
-
-if ! curl -fsSL "$TMUX_CONF_URL" -o "$TMUX_CONF_PATH.tmp"; then
-    echo "Error: Failed to download .tmux.conf from GitHub. Keeping existing file if present."
-    rm -f "$TMUX_CONF_PATH.tmp"
-    exit 1
+# Installing .tmux
+if [ ! -d ~/.tmux ]; then
+    cd
+    git clone --single-branch https://github.com/gpakosz/.tmux.git
+    ln -s -f .tmux/.tmux.conf .tmux.conf
+    ln -s -f .tmux/.tmux.conf.local .tmux.conf.local
+    cat >> .tmux/.tmux.conf.local << EOF
+# Remove SSH_AUTH_SOCK to disable tmux automatically resetting the variable
+set -g update-environment "DISPLAY KRB5CCNAME SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
+# Use a symlink to look up SSH authentication
+setenv -g SSH_AUTH_SOCK \$HOME/.ssh/ssh_auth_sock
+EOF
 else
-    # Verify the file is not empty
-    if [ -s "$TMUX_CONF_PATH.tmp" ]; then
-        mv "$TMUX_CONF_PATH.tmp" "$TMUX_CONF_PATH"
-        echo ".tmux.conf downloaded successfully."
-    else
-        echo "Error: Downloaded .tmux.conf file is empty. Keeping existing file if present."
-        rm -f "$TMUX_CONF_PATH.tmp"
-        exit 1
-    fi
+    echo ".tmux already installed."
 fi
 
+# Define dotfiles path
+DOTFILES_PATH="$HOME/dotfiles"
 # Symlink dotfiles to the root within your workspace or append content if file exists
 echo "Processing dotfiles!"
 find "$DOTFILES_PATH" -type f -path "$DOTFILES_PATH/.*" | grep -v "/.git/" | grep -v "/.git$" |
