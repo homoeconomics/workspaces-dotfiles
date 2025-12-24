@@ -1,14 +1,118 @@
-let mapleader=" "
+" ===== https://github.com/cufarvid/lazy-idea =====
+source ~/.lazy-idea.ideavimrc
 
-""" Plugins  --------------------------------
-set easymotion
-
-""" Common settings -------------------------
-set showmode
-set so=5
+" ===== Unique Settings =====
+set highlightedyank
+set ignorecase
+set smartcase
 set incsearch
+set hlsearch
+set clipboard+=ideaput
+set ideajoin
+set idearefactormode=keep
 set nu
 
-""" My Mappings -----------------------------
-map <leader>f <Plug>(easymotion-s)
-map <leader>e <Plug>(easymotion-f)
+" ===== Windows / Layout =====
+let g:WhichKeyDesc_window_move_to_group = "<C-m> Move Editor to Other Group"
+nmap <C-m> <Action>(MoveEditorToOppositeTabGroup)
+
+let g:WhichKeyDesc_window_edit_new = "<leader>we Edit in New Window"
+nmap <leader>we <Action>(EditSourceInNewWindow)
+
+let g:WhichKeyDesc_window_navbar = "<C-b> Show Navigation Bar"
+nmap <C-b> <Action>(ShowNavBar)
+
+let g:WhichKeyDesc_window_unsplit = "<C-=> Unsplit Window"
+nmap <C-=> <Action>(Unsplit)
+
+let g:WhichKeyDesc_split_below = "<C--> Split Window Below"
+nmap <C--> <c-w>s
+
+let g:WhichKeyDesc_split_right = "<C-\> Split Window Right"
+nmap <C-\> <c-w>v
+
+" ===== Run / Test =====
+let g:WhichKeyDesc_test_rerun = "<leader>tR Rerun"
+nmap <leader>tR <Action>(Rerun)
+
+let g:WhichKeyDesc_test_rerun_failed = "<leader>tF Rerun Failed"
+nmap <leader>tF <Action>(RerunFailedTests)
+
+let g:WhichKeyDesc_test_history = "<leader>tH Test History"
+nmap <leader>tH <Action>(ImportTests)
+
+let g:WhichKeyDesc_test_menu = "<leader>tM Run Menu"
+nmap <leader>tM <Action>(RunMenu)
+
+let g:WhichKeyDesc_test_debug_class = "<leader>tD Debug Class"
+nmap <leader>tD <Action>(DebugClass)
+
+let g:WhichKeyDesc_debug_args = "<leader>ta Run with Args"
+nmap <leader>ta <Action>(ChooseRunConfiguration)
+
+" ===== Code (modification) =====
+let g:WhichKeyDesc_code_refactor_quicklist = "<leader>cQ Refactorings Quicklist"
+nmap <leader>cQ <Action>(Refactorings.QuickListPopupAction)
+
+let g:WhichKeyDesc_optimize_imports = "<leader>co Optimize Imports"
+nmap <leader>co <Action>(OptimizeImports)
+
+let g:WhichKeyDesc_format = "<leader>cf Reformat Code"
+nmap <leader>cf <Action>(ReformatCode)
+vmap <leader>cf <Action>(ReformatCode)
+
+let g:WhichKeyDesc_goto_call_hierarchy = "gh Call Hierarchy"
+nmap gh <Action>(CallHierarchy)
+
+" ===== Code (read-only / navigation, g prefix) =====
+let g:WhichKeyDesc_goto_super = "gp Goto Parent"
+nmap gp <Action>(GotoSuperMethod)
+
+let g:WhichKeyDesc_show_usages = "gu Show Usages"
+nmap gu <Action>(ShowUsages)
+
+" ===== File / Config =====
+let g:WhichKeyDesc_leader_v = "<leader>v .ideavimrc"
+
+let g:WhichKeyDesc_file_edit_ideavimrc = "<leader>ve Edit .ideavimrc"
+nmap <leader>ve :e ~/.ideavimrc<CR>
+
+let g:WhichKeyDesc_file_reload_ideavimrc = "<leader>vr Reload .ideavimrc"
+nmap <leader>vr :action IdeaVim.ReloadVimRc.reload<CR>
+
+let g:WhichKeyDesc_file_edit_lazy = "<leader>vl Edit Lazy-Idea .ideavimrc"
+nmap <leader>vl :e ~/.lazy-idea.ideavimrc<CR>
+
+" ===== Search =====
+let g:WhichKeyDesc_search_everywhere = "<leader>se Search Everywhere"
+nmap <leader>se <Action>(SearchEverywhere)
+
+let g:WhichKeyDesc_search_actions = "<leader>sO Search Class"
+nmap <leader>sO <Action>(GotoClass)
+
+" ===== UI Toggles =====
+let g:WhichKeyDesc_ui_zen = "<leader>uZ Zen Mode"
+nmap <leader>uZ <Action>(ToggleZenMode)
+
+let g:WhichKeyDesc_ui_distraction_free = "<leader>uD Distraction Free"
+nmap <leader>uD <Action>(ToggleDistractionFreeMode)
+
+let g:WhichKeyDesc_ui_fullscreen = "<leader>uF Full Screen"
+nmap <leader>uF <Action>(ToggleFullScreen)
+
+let g:WhichKeyDesc_ui_hide_windows = "<C-x> Hide Windows"
+nmap <c-x> <Action>(HideAllWindows)
+
+" ===== Clipboard Helpers =====
+set clipboard+=ideaput
+
+let g:WhichKeyDesc_leader_p = "<leader>p Copy/Paste"
+
+let g:WhichKeyDesc_paste_system = "<leader>ps Paste from System Register"
+nmap <leader>ps "+p
+
+let g:WhichKeyDesc_paste_yank = "<leader>py Paste from Yank Register"
+nmap <leader>py "0p
+
+let g:WhichKeyDesc_yank_system = "<leader>y Yank to System Register"
+nmap <leader>y "+y
