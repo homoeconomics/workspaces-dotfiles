@@ -17,8 +17,8 @@
 set -euo pipefail
 
 echo "Installing dependencies..."
-sudo apt-get update
-sudo apt-get install build-essential procps curl file git
+sudo apt-get update -y
+sudo apt-get install -y build-essential procps curl file git
 
 if [ ! -d /home/linuxbrew ]; then
     echo "Installing homebrew..."
