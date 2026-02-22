@@ -47,7 +47,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # plugins=(git brew bundler capistrano cloudapp composer gem laravel npm rvm bower sublime)
 
 # antigen
-source $HOME/.antigen/antigen.zsh
+source /usr/share/zsh-antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh

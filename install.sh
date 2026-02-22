@@ -18,7 +18,7 @@ set -euo pipefail
 
 echo "Installing dependencies..."
 sudo apt-get update -y
-sudo apt-get install -y build-essential procps curl file git
+sudo apt-get install -y build-essential procps curl file git zsh-antigen
 
 if [ ! -d /home/linuxbrew ]; then
     echo "Installing homebrew..."
@@ -31,32 +31,6 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 echo "Installing fzf"
 brew update
 brew install fzf
-
-# Install antigen if not already installed
-ANTIGEN_DIR="$HOME/.antigen"
-if [ ! -f "$ANTIGEN_DIR/antigen.zsh" ]; then
-    echo "Installing antigen..."
-    mkdir -p "$ANTIGEN_DIR"
-
-    # Download antigen from the source
-    if ! curl -fsSL git.io/antigen -o "$ANTIGEN_DIR/antigen.zsh.tmp"; then
-        echo "Error: Failed to download antigen from git.io. Aborting antigen installation."
-        rm -f "$ANTIGEN_DIR/antigen.zsh.tmp"
-        exit 1
-    fi
-
-    # Verify the file is not empty
-    if [ -s "$ANTIGEN_DIR/antigen.zsh.tmp" ]; then
-        mv "$ANTIGEN_DIR/antigen.zsh.tmp" "$ANTIGEN_DIR/antigen.zsh"
-        echo "Antigen installed successfully."
-    else
-        echo "Error: Downloaded antigen file is empty. Aborting antigen installation."
-        rm -f "$ANTIGEN_DIR/antigen.zsh.tmp"
-        exit 1
-    fi
-else
-    echo "Antigen is already installed."
-fi
 
 # Installing .tmux
 if [ ! -d ~/.tmux ]; then
