@@ -76,23 +76,21 @@ fi
 
 # Define dotfiles path
 DOTFILES_PATH="$HOME/dotfiles"
-# Symlink dotfiles to the root within your workspace or append content if file exists
+# Symlink dotfiles to the root within your workspace, backing up existing files
 echo "Processing dotfiles!"
 find "$DOTFILES_PATH" -type f -path "$DOTFILES_PATH/.*" | grep -v "/.git/" | grep -v "/.git$" |
 while read df; do
     link=${df/$DOTFILES_PATH/$HOME}
     mkdir -p "$(dirname "$link")"
 
-    # Check if the target file already exists and is not a symlink
+    # Back up existing file if it's not already a symlink
     if [ -f "$link" ] && [ ! -L "$link" ]; then
-        # Append content to the existing file
-        echo "Appending content from $df to existing file $link"
-        cat "$df" >> "$link"
-    else
-        # Create a symlink if the file doesn't exist or is already a symlink
-        ln -sf "$df" "$link"
-        echo "Linked: $df -> $link"
+        echo "WARNING: $link already exists. Backing up to ${link}.bak"
+        mv "$link" "${link}.bak"
     fi
+
+    ln -sf "$df" "$link"
+    echo "Linked: $df -> $link"
 done
 echo "Processed dotfiles!"
 
