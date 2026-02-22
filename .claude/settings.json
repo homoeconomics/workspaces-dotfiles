@@ -1,0 +1,62 @@
+{
+  "apiKeyHelper": "workspace_secret ANTHROPIC_APIKEY1",
+  "model": "opus",
+  "enabledPlugins": {
+    "odp-sql@datadog-claude-plugins": true,
+    "gopls-lsp@claude-plugins-official": true
+  },
+  "env": {
+    "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1",
+    "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
+    "DISABLE_NON_ESSENTIAL_MODEL_CALLS": "1"
+  },
+  "extraKnownMarketplaces": {
+    "datadog": {
+      "source": {
+        "source": "github",
+        "repo": "DataDog/claude-marketplace"
+      }
+    }
+  },
+  "forceLoginMethod": "console",
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(cat:*)",
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(wc:*)",
+      "Bash(which:*)",
+      "Bash(file:*)",
+      "Bash(diff:*)",
+      "Bash(jq:*)",
+      "Bash(shellcheck:*)",
+      "Bash(grep:*)",
+      "Bash(tr:*)",
+      "Bash(lsof:*)",
+      "Bash(head:*)",
+      "Bash(xxd:*)",
+      "Bash(git grep:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git show:*)",
+      "Bash(git remote:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(git ls-files:*)",
+      "Bash(git stash list:*)",
+      "Bash(git check-ignore:*)",
+      "Bash(git show-ref:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh repo view:*)",
+      "Bash(gh pr checks:*)"
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "npx -y ccstatusline@latest",
+    "padding": 0
+  }
+}

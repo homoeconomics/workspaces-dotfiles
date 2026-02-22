@@ -95,3 +95,16 @@ while read df; do
     fi
 done
 echo "Processed dotfiles!"
+
+# Symlink .claude/.settings.json
+CLAUDE_SETTINGS_SRC="$DOTFILES_PATH/.claude/settings.json"
+CLAUDE_SETTINGS_DST="$HOME/.claude/settings.json"
+if [ -f "$CLAUDE_SETTINGS_SRC" ]; then
+    mkdir -p "$HOME/.claude"
+    if [ -f "$CLAUDE_SETTINGS_DST" ] && [ ! -L "$CLAUDE_SETTINGS_DST" ]; then
+        echo "WARNING: $CLAUDE_SETTINGS_DST already exists. Backing up to ${CLAUDE_SETTINGS_DST}.bak"
+        mv "$CLAUDE_SETTINGS_DST" "${CLAUDE_SETTINGS_DST}.bak"
+    fi
+    ln -sf "$CLAUDE_SETTINGS_SRC" "$CLAUDE_SETTINGS_DST"
+    echo "Linked: $CLAUDE_SETTINGS_SRC -> $CLAUDE_SETTINGS_DST"
+fi
