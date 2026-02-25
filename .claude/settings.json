@@ -2,6 +2,7 @@
   "apiKeyHelper": "workspace_secret ANTHROPIC_APIKEY1",
   "model": "opus",
   "enabledPlugins": {
+    "everything-claude-code@everything-claude-code": true
     "odp-sql@datadog-claude-plugins": true,
     "gopls-lsp@claude-plugins-official": true
   },
@@ -11,6 +12,12 @@
     "DISABLE_NON_ESSENTIAL_MODEL_CALLS": "1"
   },
   "extraKnownMarketplaces": {
+    "everything-claude-code": {
+      "source": {
+        "source": "github",
+        "repo": "affaan-m/everything-claude-code"
+      }
+    }
     "datadog": {
       "source": {
         "source": "github",
