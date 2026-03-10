@@ -2,7 +2,11 @@
   "apiKeyHelper": "workspace_secret ANTHROPIC_APIKEY1",
   "model": "opus",
   "enabledPlugins": {
+    "dd@datadog-claude-plugins": true,
     "odp-sql@datadog-claude-plugins": true,
+    "code-simplifier@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "everything-claude-code@everything-claude-code": true,
     "gopls-lsp@claude-plugins-official": true
   },
   "env": {
@@ -11,6 +15,18 @@
     "DISABLE_NON_ESSENTIAL_MODEL_CALLS": "1"
   },
   "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    },
+    "everything-claude-code": {
+      "source": {
+        "source": "github",
+        "repo": "affaan-m/everything-claude-code"
+      }
+    },
     "datadog": {
       "source": {
         "source": "github",
@@ -52,7 +68,8 @@
       "Bash(gh pr list:*)",
       "Bash(gh repo view:*)",
       "Bash(gh pr checks:*)"
-    ]
+    ],
+    "defaultMode": "plan"
   },
   "statusLine": {
     "type": "command",
