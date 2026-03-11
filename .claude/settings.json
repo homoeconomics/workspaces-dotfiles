@@ -1,40 +1,10 @@
 {
   "apiKeyHelper": "workspace_secret ANTHROPIC_APIKEY1",
-  "model": "opus",
-  "enabledPlugins": {
-    "dd@datadog-claude-plugins": true,
-    "odp-sql@datadog-claude-plugins": true,
-    "code-simplifier@claude-plugins-official": true,
-    "commit-commands@claude-plugins-official": true,
-    "everything-claude-code@everything-claude-code": true,
-    "gopls-lsp@claude-plugins-official": true
-  },
   "env": {
     "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1",
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
     "DISABLE_NON_ESSENTIAL_MODEL_CALLS": "1"
   },
-  "extraKnownMarketplaces": {
-    "claude-plugins-official": {
-      "source": {
-        "source": "github",
-        "repo": "anthropics/claude-plugins-official"
-      }
-    },
-    "everything-claude-code": {
-      "source": {
-        "source": "github",
-        "repo": "affaan-m/everything-claude-code"
-      }
-    },
-    "datadog": {
-      "source": {
-        "source": "github",
-        "repo": "DataDog/claude-marketplace"
-      }
-    }
-  },
-  "forceLoginMethod": "console",
   "permissions": {
     "allow": [
       "Bash(tree:*)",
@@ -75,5 +45,35 @@
     "type": "command",
     "command": "npx -y ccstatusline@latest",
     "padding": 0
-  }
+  },
+  "enabledPlugins": {
+    "dd@datadog-claude-plugins": true,
+    "odp-sql@datadog-claude-plugins": true,
+    "code-simplifier@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "everything-claude-code@everything-claude-code": true,
+    "gopls-lsp@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    },
+    "everything-claude-code": {
+      "source": {
+        "source": "github",
+        "repo": "affaan-m/everything-claude-code"
+      }
+    },
+    "datadog": {
+      "source": {
+        "source": "github",
+        "repo": "DataDog/claude-marketplace"
+      }
+    }
+  },
+  "forceLoginMethod": "console",
+  "model": "opus"
 }

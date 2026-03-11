@@ -1,0 +1,26 @@
+# Antigen plugin manager
+source /usr/share/zsh-antigen/antigen.zsh
+
+# oh-my-zsh plugins
+antigen use oh-my-zsh
+antigen bundle git
+antigen bundle vi-mode
+antigen bundle tmux
+antigen bundle z
+antigen bundle pip
+antigen bundle lein
+antigen bundle command-not-found
+
+# External plugins
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle MichaelAquilina/zsh-you-should-use
+
+# Theme
+antigen theme agnoster
+
+# Apply
+antigen apply
+
+# Custom aliases
+alias claude-yolo="claude --dangerously-skip-permissions"
