@@ -2,19 +2,12 @@
 set -e
 
 DOTFILES_DIR="$HOME/dotfiles"
-NICKJJ_DOTFILES="$HOME/.nickjj-dotfiles"
 
 # 1. Install zsh-antigen (required for our local config)
-sudo apt-get update && sudo apt-get install -y zsh-antigen
+sudo apt-get update && sudo apt-get install -y curl zsh-antigen
 
-# 2. Clone nickjj's dotfiles if not present
-if [ ! -d "$NICKJJ_DOTFILES" ]; then
-    git clone https://github.com/nickjj/dotfiles.git "$NICKJJ_DOTFILES"
-fi
-
-# 3. Run nickjj's install script
-cd "$NICKJJ_DOTFILES"
-./install
+# 2. Run nickjj's dotfiles installer via bootstrap mode
+BOOTSTRAP=1 bash <(curl -fsSL https://raw.githubusercontent.com/nickjj/dotfiles/master/install)
 
 # 4. Symlink our antigen config as .zshrc.local
 mkdir -p "$HOME/.config/zsh"
