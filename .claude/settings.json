@@ -75,5 +75,6 @@
     }
   },
   "forceLoginMethod": "console",
+  "effortLevel": "high",
   "model": "opus"
 }
