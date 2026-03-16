@@ -17,7 +17,8 @@ if [ -f "$HOME/.claude/settings.json" ] && [ ! -L "$HOME/.claude/settings.json" 
 fi
 ln -sf "$DOTFILES_DIR/.claude/settings.json" "$HOME/.claude/settings.json"
 
-# 4. Install golangci-lint via mise
+# 4. Install tools via mise
 mise use -g golangci-lint
+mise use -g lazygit
 
 echo "Done! Restart your shell or run: source ~/.config/zsh/.zshrc"
