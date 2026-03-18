@@ -24,3 +24,6 @@ antigen apply
 
 # Custom aliases
 alias claude-yolo="claude --dangerously-skip-permissions"
+
+# Datadog credentials (loaded from password store)
+export DD_API_KEY=$(pass show Datadog/dd.datad0g.com_api-key) DD_APP_KEY=$(pass show Datadog/dd.datad0g.com_app-key)
