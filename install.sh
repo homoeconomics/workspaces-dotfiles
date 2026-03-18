@@ -9,6 +9,7 @@ sudo apt-get update && sudo apt-get install -y curl zsh-antigen
 # 2. Symlink our antigen config as .zshrc.local
 mkdir -p "$HOME/.config/zsh"
 ln -sf "$DOTFILES_DIR/zshrc.local" "$HOME/.config/zsh/.zshrc.local"
+ln -sf "$DOTFILES_DIR/zprofile.local" "$HOME/.config/zsh/.zprofile.local"
 
 # 3. Link Claude settings
 mkdir -p "$HOME/.claude"
