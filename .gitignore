@@ -1,0 +1,5 @@
+# Tmux plugins (cloned by TPM into symlinked dir)
+.config/tmux/plugins/
+
+# Tmux resurrect session data
+.config/tmux/resurrect/

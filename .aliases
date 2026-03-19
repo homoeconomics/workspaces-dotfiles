@@ -1,0 +1,31 @@
+# shellcheck shell=bash
+
+alias ll="ls -alF"
+alias la="ls -A"
+alias l="ls -CF"
+
+alias eza="EZA_ICON_SPACING=2 eza --long --all --octal-permissions --group --group-directories-first --time-style long-iso --header --icons auto"
+
+alias diff="diff --color -u"
+
+alias sz='. ${HOME}/.zprofile && . ${HOME}/.zshrc'
+alias dt='cd ${HOME}/dotfiles && nvim .'
+
+alias 755d="find . -type d -exec chmod 755 {} \;"
+alias 644f="find . -type f -exec chmod 644 {} \;"
+
+# shellcheck disable=SC2139
+alias pf="fzf ${FZF_CTRL_T_OPTS}"
+
+alias gi="git init && git symbolic-ref HEAD refs/heads/main"
+alias gcl="git diff --name-only --diff-filter=U"
+alias ge="rg '[\p{Emoji}--\p{Ascii}]'"
+
+alias drun='docker container run --rm -it -v "${PWD}":/app -w /app'
+
+alias k="kubectl"
+alias tf="terraform"
+
+# A way to define and run tasks in a project. It's like make except it's pure
+# Bash so there's no make limitations like not being able to forward arguments.
+alias run=./run

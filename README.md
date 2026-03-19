@@ -1,25 +1,27 @@
 # dotfiles
 
-Personal dotfiles layered on top of [nickjj/dotfiles](https://github.com/nickjj/dotfiles).
+Personal development environment dotfiles for Ubuntu.
+
+## Prerequisites
+
+Install [mise](https://mise.jdx.dev):
+
+```sh
+curl https://mise.run | sh
+```
 
 ## Setup
 
-### 1. Bootstrap nickjj/dotfiles
-
-Run this first — it requires manual interaction:
-
 ```sh
-BOOTSTRAP=1 bash <(curl -fsSL https://raw.githubusercontent.com/nickjj/dotfiles/master/install)
-```
-
-### 2. Run the install script
-
-```sh
+git clone <repo> ~/dotfiles
+cd ~/dotfiles
 ./install.sh
 ```
 
-This will:
-- Install zsh-antigen
-- Symlink the local zsh config
-- Link Claude settings
-- Install golangci-lint via mise
+Note: `chsh` at the end may prompt for your password to set zsh as the default shell.
+
+## After install
+
+- Restart your shell (or `source ~/.zshrc`)
+- Open tmux and press `` ` `` + `I` to install tmux plugins
+- Open nvim — plugins will auto-install on first launch
