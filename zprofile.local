@@ -1,11 +1,12 @@
 # shellcheck shell=bash
 # Add your custom overrides and new additions here.
 
-export DOTFILES_PATH="/home/bits/nickjj-dotfiles"
-
 # Use default GPG and password-store paths instead of XDG overrides
 # set by nickjj/dotfiles in .zprofile.
 export PASSWORD_STORE_DIR="${HOME}/.password-store"
 
 # Build toolchain paths
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/opt/librdkafka-1.8.2/lib/pkgconfig:/opt/librdkafka-1.9.2/lib/pkgconfig:/opt/librdkafka-2.3.0/lib/pkgconfig:/opt/librdkafka-2.4.0/lib/pkgconfig:/opt/librdkafka-2.5.0/lib/pkgconfig:/opt/librdkafka-2.8.0/lib/pkgconfig:/opt/librdkafka-2.10.1/lib/pkgconfig
+
+# Datadog credentials (loaded from password store)
+export DD_API_KEY=$(pass show Datadog/dd.datad0g.com_api-key) DD_APP_KEY=$(pass show Datadog/dd.datad0g.com_app-key)
