@@ -18,7 +18,17 @@ if [ -f "$HOME/.claude/settings.json" ] && [ ! -L "$HOME/.claude/settings.json" 
 fi
 ln -sf "$DOTFILES_DIR/.claude/settings.json" "$HOME/.claude/settings.json"
 
-# 4. Install tools via mise
+# 4. Link nvim plugin overrides
+mkdir -p "$HOME/.config/nvim/lua/plugins"
+ln -sf "$DOTFILES_DIR/.config/nvim/lua/plugins/dd-lsp.lua" "$HOME/.config/nvim/lua/plugins/dd-lsp.lua"
+
+# 5. Link per-project neoconf files (gopls directory filters)
+DATADOG_ROOT="$HOME/go/src/github.com/DataDog"
+if [ -d "$DATADOG_ROOT/dd-go" ]; then
+    ln -sf "$DOTFILES_DIR/neoconf/dd-go.neoconf.json" "$DATADOG_ROOT/dd-go/.neoconf.json"
+fi
+
+# 6. Install tools via mise
 mise use -g golangci-lint
 mise use -g lazygit
 

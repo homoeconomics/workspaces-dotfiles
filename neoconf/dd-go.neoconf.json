@@ -1,0 +1,49 @@
+{
+  "lspconfig": {
+    "gopls": {
+      "gopls": {
+        "directoryFilters": [
+          "-.git",
+          "-.vscode",
+          "-.idea",
+          "-node_modules",
+          "-bazel",
+          "-bin",
+          "-cache",
+          "-cachev3",
+          "-campaigns",
+          "-ci",
+          "-ci-app",
+          "-cloud-integrations",
+          "-consumer",
+          "-database-monitoring",
+          "-datastreams-monitoring",
+          "-error-tracking",
+          "-etc",
+          "-http",
+          "-infrastructure",
+          "-k8s",
+          "-k9-ast",
+          "-k9-vm-ast",
+          "-network-devices",
+          "-networks",
+          "-orgstore",
+          "-performance",
+          "-rpc",
+          "-rules",
+          "-rum",
+          "-schemas",
+          "-scripts",
+          "-source-code-integration",
+          "-synthetics",
+          "-systems",
+          "-tasks",
+          "-testutil",
+          "-tilt",
+          "-tools",
+          "-trace"
+        ]
+      }
+    }
+  }
+}
