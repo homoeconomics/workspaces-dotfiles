@@ -28,6 +28,11 @@ if [ -d "$DATADOG_ROOT/dd-go" ]; then
     ln -sf "$DOTFILES_DIR/neoconf/dd-go.neoconf.json" "$DATADOG_ROOT/dd-go/.neoconf.json"
 fi
 
+DD_SOURCE="$HOME/dd/dd-source"
+if [ -d "$DD_SOURCE" ]; then
+    ln -sf "$DOTFILES_DIR/neoconf/dd-source.neoconf.json" "$DD_SOURCE/.neoconf.json"
+fi
+
 # 6. Install tools via mise
 mise use -g golangci-lint
 mise use -g lazygit

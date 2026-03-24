@@ -42,7 +42,11 @@
           "-tilt",
           "-tools",
           "-trace"
-        ]
+        ],
+        "staticcheck": false,
+        "vulncheck": "Off",
+        "diagnosticsTrigger": "Save",
+        "symbolMatcher": "FastFuzzy"
       }
     }
   }

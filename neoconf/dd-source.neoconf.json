@@ -1,0 +1,39 @@
+{
+  "lspconfig": {
+    "gopls": {
+      "gopls": {
+        "directoryFilters": [
+          "-.git",
+          "-.vscode",
+          "-.idea",
+          "-bazel-bin",
+          "-bazel-dd-source",
+          "-bazel-out",
+          "-bazel-testlogs",
+          "-bin",
+          "-config",
+          "-etc",
+          "-hooks",
+          "-libs/java",
+          "-libs/proto",
+          "-libs/py",
+          "-libs/py3",
+          "-libs/rust",
+          "-rules",
+          "-third_party",
+          "-tools",
+          "-domains",
+          "+domains/cloud-security-platform",
+          "+domains/cloud_security_platform",
+          "+domains/csm",
+          "+domains/continuous_security",
+          "+domains/seceng/cloud_security"
+        ],
+        "staticcheck": false,
+        "vulncheck": "Off",
+        "diagnosticsTrigger": "Save",
+        "symbolMatcher": "FastFuzzy"
+      }
+    }
+  }
+}
