@@ -37,4 +37,42 @@ fi
 mise use -g golangci-lint
 mise use -g lazygit
 
+# 7. Claude Code: marketplaces, plugins, and MCP servers
+if command -v claude &>/dev/null; then
+  # Marketplaces
+  claude plugin marketplace add anthropics/claude-plugins-official
+  claude plugin marketplace add DataDog/claude-marketplace
+
+  # Plugins (user scope)
+  claude plugin install dd@datadog-claude-plugins -s user
+  claude plugin install odp-sql@datadog-claude-plugins -s user
+  claude plugin install feature@datadog-claude-plugins -s user
+  claude plugin install marketplace-auto-update@datadog-claude-plugins -s user
+  claude plugin install code-simplifier@claude-plugins-official -s user
+  claude plugin install commit-commands@claude-plugins-official -s user
+  claude plugin install gopls-lsp@claude-plugins-official -s user
+  claude plugin install superpowers@claude-plugins-official -s user
+
+  # MCP servers (HTTP, user scope)
+  # Remove-then-add to stay idempotent (claude mcp add errors on duplicates)
+  claude mcp remove odp-staging -s user 2>/dev/null || true
+  claude mcp add --transport http odp-staging \
+    https://odp-mcp-server.mcp.us1.staging.dog/internal/unstable/odp-mcp-server/mcp \
+    -s user
+  claude mcp remove datadog-staging -s user 2>/dev/null || true
+  claude mcp add --transport http datadog-staging \
+    "https://mcp.datad0g.com/api/unstable/mcp-server/mcp" \
+    -s user
+  claude mcp remove datadog-prod -s user 2>/dev/null || true
+  claude mcp add --transport http datadog-prod \
+    "https://mcp.datadoghq.com/api/unstable/mcp-server/mcp?toolsets=core,software-delivery,error-tracking,profiling,widgets,data-observability" \
+    -s user
+  claude mcp remove datadog-atlassian -s user 2>/dev/null || true
+  claude mcp add --transport http datadog-atlassian \
+    https://atlassian-mcp-server-834963730936.us-central1.run.app/mcp \
+    -s user
+else
+  echo "claude not found — skipping plugin and MCP setup"
+fi
+
 echo "Done! Restart your shell or run: source ~/.config/zsh/.zshrc"
