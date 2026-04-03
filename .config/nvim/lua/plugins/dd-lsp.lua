@@ -52,6 +52,9 @@ return {
         },
         gopls = {
           cmd = { "/home/bits/.local/bin/dd-gopls" },
+          cmd_env = {
+            GOPLS_DISABLE_MODULE_LOADS = "1",
+          },
         },
         pyright = {
           -- Both settings are to let Ruff handle these tasks.
