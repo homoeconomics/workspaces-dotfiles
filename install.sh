@@ -1,7 +1,24 @@
 #!/usr/bin/env bash
 set -e
 
-DOTFILES_DIR="$HOME/dotfiles"
+DOTFILES_DIR="$HOME/workspaces-dotfiles"
+
+# --- nickjj/dotfiles ---
+
+# Bootstrap the nickjj/dotfiles repo into /tmp/nickjj-dotfiles/
+BOOTSTRAP=1 bash <(curl -fsSL https://raw.githubusercontent.com/nickjj/dotfiles/master/install)
+
+# Customize the install-config before running the nickjj install
+cat >> /tmp/nickjj-dotfiles/install-config <<'EOF'
+
+export PACKAGES_APT_SKIP=("git-delta")
+export PACKAGES_AUTO_CONFIRM=1
+EOF
+
+# Run the nickjj install (requires manual input)
+/tmp/nickjj-dotfiles/install
+
+# --- Local dotfiles ---
 
 # 1. Install zsh-antigen (required for our local config)
 sudo apt-get update && sudo apt-get install -y curl zsh-antigen
