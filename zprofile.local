@@ -1,7 +1,7 @@
 # shellcheck shell=bash
 # Add your custom overrides and new additions here.
 
-export DOTFILES_PATH="/home/bits/nickjj-dotfiles"
+export DOTFILES_PATH="/home/bits/dotfiles"
 
 # Use default GPG and password-store paths instead of XDG overrides
 # set by nickjj/dotfiles in .zprofile.
