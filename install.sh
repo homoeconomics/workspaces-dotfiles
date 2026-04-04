@@ -84,9 +84,9 @@ if command -v claude &>/dev/null; then
   claude mcp add --transport http datadog-prod \
     "https://mcp.datadoghq.com/api/unstable/mcp-server/mcp?toolsets=core,software-delivery,error-tracking,profiling,widgets,data-observability" \
     -s user
-  claude mcp remove datadog-atlassian -s user 2>/dev/null || true
-  claude mcp add --transport http datadog-atlassian \
-    https://atlassian-mcp-server-834963730936.us-central1.run.app/mcp \
+  claude mcp remove atlassian -s user 2>/dev/null || true
+  claude mcp add --transport sse atlassian \
+    https://mcp.atlassian.com/v1/sse \
     -s user
 else
   echo "claude not found — skipping plugin and MCP setup"
