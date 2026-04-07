@@ -37,6 +37,7 @@ if [ -f "$HOME/.claude/settings.json" ] && [ ! -L "$HOME/.claude/settings.json" 
     mv "$HOME/.claude/settings.json" "$HOME/.claude/settings.json.bak"
 fi
 ln -sf "$DOTFILES_DIR/.claude/settings.json" "$HOME/.claude/settings.json"
+ln -sf "$DOTFILES_DIR/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 
 # 4. Link nvim plugin overrides
 mkdir -p "$HOME/.config/nvim/lua/plugins"
