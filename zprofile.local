@@ -1,10 +1,13 @@
 # shellcheck shell=bash
 # Add your custom overrides and new additions here.
 
-export DOTFILES_PATH="/home/bits/dotfiles"
+# nickjj/dotfriedrice's .zshrc uses this to compute HISTFILE. Because our
+# install.sh symlinks this file in place of the upstream .zprofile.local, we
+# must re-export it ourselves — otherwise HISTFILE resolves to /.config/zsh/...
+export DOTFRIEDRICE_PATH="${HOME}/dotfriedrice"
 
 # Use default GPG and password-store paths instead of XDG overrides
-# set by nickjj/dotfiles in .zprofile.
+# set by nickjj/dotfriedrice in .zprofile.
 export PASSWORD_STORE_DIR="${HOME}/.password-store"
 
 # Build toolchain paths

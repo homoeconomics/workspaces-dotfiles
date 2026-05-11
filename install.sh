@@ -3,22 +3,28 @@ set -e
 
 DOTFILES_DIR="$HOME/workspaces-dotfiles"
 
-# --- nickjj/dotfiles ---
+# --- nickjj/dotfriedrice ---
 
-if [ ! -d "$HOME/dotfiles" ]; then
-  # Bootstrap the nickjj/dotfiles repo into /tmp/nickjj-dotfiles/
-  BOOTSTRAP=1 bash <(curl -fsSL https://raw.githubusercontent.com/nickjj/dotfiles/master/install)
+DOTFRIEDRICE_PATH="$HOME/dotfriedrice"
 
-  # Customize the install-config before running the nickjj install
-  cat >> /tmp/nickjj-dotfiles/install-config <<'EOF'
+if [ ! -d "$DOTFRIEDRICE_PATH" ]; then
+  # Clone the repo manually so we can customize dotfriedrice-config before
+  # running ./dotfriedrice. The upstream `bootstrap` script clones and execs
+  # the installer in one go with no hook to edit the config in between.
+  sudo apt-get update && sudo apt-get install -y git
+  git clone https://github.com/nickjj/dotfriedrice "$DOTFRIEDRICE_PATH"
+
+  # Seed dotfriedrice-config from the example, then append our overrides
+  cp "$DOTFRIEDRICE_PATH/dotfriedrice-config.example" "$DOTFRIEDRICE_PATH/dotfriedrice-config"
+  cat >> "$DOTFRIEDRICE_PATH/dotfriedrice-config" <<'EOF'
 export PACKAGES_APT_SKIP=("git-delta")
 export PACKAGES_AUTO_CONFIRM=1
 EOF
 
-  # Run the nickjj install (requires manual input)
-  /tmp/nickjj-dotfiles/install
+  # Run the nickjj installer (requires manual input)
+  (cd "$DOTFRIEDRICE_PATH" && ./dotfriedrice)
 else
-  echo "nickjj/dotfiles already installed at ~/dotfiles — skipping"
+  echo "nickjj/dotfriedrice already installed at $DOTFRIEDRICE_PATH — skipping"
 fi
 
 # --- Local dotfiles ---
