@@ -70,6 +70,6 @@
     }
   },
   "forceLoginMethod": "console",
-  "effortLevel": "high",
-  "model": "opus"
+  "effortLevel": "xhigh",
+  "model": "opus[1m]"
 }
