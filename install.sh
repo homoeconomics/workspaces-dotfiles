@@ -98,6 +98,15 @@ if command -v claude &>/dev/null; then
   claude mcp add --transport sse atlassian \
     https://mcp.atlassian.com/v1/sse \
     -s user
+  claude mcp remove datadog-google-workspace -s user 2>/dev/null || true
+  claude mcp add --transport http datadog-google-workspace \
+    https://google-workspace-mcp-server-834963730936.us-central1.run.app/mcp \
+    -s user
+  claude mcp remove slack -s user 2>/dev/null || true
+  claude mcp add --transport http slack \
+    --client-id 1601185624273.8899143856786 --callback-port 3118 \
+    https://mcp.slack.com/mcp \
+    -s user
 else
   echo "claude not found — skipping plugin and MCP setup"
 fi
