@@ -53,7 +53,8 @@
     "commit-commands@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
     "feature@datadog-claude-plugins": true,
-    "superpowers@claude-plugins-official": true
+    "superpowers@claude-plugins-official": true,
+    "marketplace-auto-update@datadog-claude-plugins": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -67,9 +68,16 @@
         "source": "github",
         "repo": "DataDog/claude-marketplace"
       }
+    },
+    "datadog-claude-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "DataDog/claude-marketplace"
+      }
     }
   },
   "forceLoginMethod": "console",
-  "effortLevel": "high",
-  "model": "opus"
+  "model": "opus[1m]",
+  "effortLevel": "xhigh",
+  "skipDangerousModePermissionPrompt": true
 }
