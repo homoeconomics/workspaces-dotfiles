@@ -49,7 +49,14 @@ ln -sf "$DOTFILES_DIR/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 mkdir -p "$HOME/.config/nvim/lua/plugins"
 ln -sf "$DOTFILES_DIR/.config/nvim/lua/plugins/dd-lsp.lua" "$HOME/.config/nvim/lua/plugins/dd-lsp.lua"
 
-# 5. Link per-project neoconf files (gopls directory filters)
+# 5. Link tmux overrides over dotfriedrice's, then install any not-yet-cloned
+#    plugins (tmux-continuum for automatic session save + restore). Mirrors
+#    dotfriedrice's own install_tmux_plugins; install_plugins is headless and
+#    reads the @plugin list (following source-file), cloning only what's missing.
+ln -sf "$DOTFILES_DIR/.config/tmux/tmux.conf" "$HOME/.config/tmux/tmux.conf"
+"$HOME/.config/tmux/plugins/tpm/bin/install_plugins"
+
+# 6. Link per-project neoconf files (gopls directory filters)
 DATADOG_ROOT="$HOME/go/src/github.com/DataDog"
 if [ -d "$DATADOG_ROOT/dd-go" ]; then
     ln -sf "$DOTFILES_DIR/neoconf/dd-go.neoconf.json" "$DATADOG_ROOT/dd-go/.neoconf.json"
@@ -60,11 +67,11 @@ if [ -d "$DD_SOURCE" ]; then
     ln -sf "$DOTFILES_DIR/neoconf/dd-source.neoconf.json" "$DD_SOURCE/.neoconf.json"
 fi
 
-# 6. Install tools via mise
+# 7. Install tools via mise
 mise use -g golangci-lint
 mise use -g lazygit
 
-# 7. Claude Code: marketplaces, plugins, and MCP servers
+# 8. Claude Code: marketplaces, plugins, and MCP servers
 if command -v claude &>/dev/null; then
   # Marketplaces
   claude plugin marketplace add anthropics/claude-plugins-official
