@@ -1,23 +1,39 @@
-# Antigen plugin manager
+# Antigen plugin manager.
+#
+# NOTE: antigen compiles the bundle list below into ~/.antigen/init.zsh and
+# reuses that cache — editing this file does NOT auto-invalidate it. After
+# adding/removing any `antigen bundle`, run `antigen reset` once and restart the
+# shell, otherwise the stale cache keeps loading the old bundles.
 source /usr/share/zsh-antigen/antigen.zsh
 
-# oh-my-zsh plugins
+# Stop oh-my-zsh from rebinding ZLE editing widgets. omz's core lib/misc.zsh
+# runs `zle -N self-insert url-quote-magic`, which overwrites the
+# fast-syntax-highlighting widget wrapper that dotfriedrice installed earlier
+# and silently kills syntax highlighting as you type (F-Sy-H here highlights by
+# wrapping widgets, with no redraw-hook fallback). Disabling the magic functions
+# leaves self-insert / bracketed-paste wrapped by the highlighter, so we don't
+# need to re-source it. Trade-off: no url-quote-magic / bracketed-paste-magic
+# (auto-escaping URLs etc.) — dotfriedrice doesn't use them anyway.
+DISABLE_MAGIC_FUNCTIONS=true
+
+# oh-my-zsh + plugins.
+#
+# IMPORTANT: do NOT load a syntax highlighter, autosuggestions, a theme, or
+# vi-mode here. dotfriedrice's ~/.config/zsh/.zshrc already provides
+# fast-syntax-highlighting, zsh-autosuggestions, zsh-vi-mode, and its own prompt
+# BEFORE this file is sourced. A second highlighter
+# (zsh-users/zsh-syntax-highlighting) makes the two fight over ZLE's
+# region_highlight and kills highlighting entirely.
 antigen use oh-my-zsh
 antigen bundle git
-antigen bundle vi-mode
 antigen bundle tmux
 antigen bundle z
 antigen bundle pip
 antigen bundle lein
 antigen bundle command-not-found
 
-# External plugins
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-autosuggestions
+# External plugins (additive only — nothing that re-wraps ZLE editing widgets)
 antigen bundle MichaelAquilina/zsh-you-should-use
-
-# Theme
-antigen theme agnoster
 
 # Apply
 antigen apply
