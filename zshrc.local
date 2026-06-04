@@ -39,4 +39,25 @@ antigen bundle MichaelAquilina/zsh-you-should-use
 antigen apply
 
 # Custom aliases
-alias claude-yolo="claude --dangerously-skip-permissions"
+alias claude-yolo="claude --dangerously-skip-permissions --model 'opus[1m]' --effort xhigh"
+
+# hotdog (security_agent / chatbot-cli dev workflow)
+alias hotdog-clirun-raw='cd ~/dd/dd-source && ~/dd/dd-source/domains/chatbot/scripts/clirun -- security_agent'
+alias hotdog-clirun-slow='cd ~/dd/dd-source && ~/dd/dd-source/domains/chatbot/scripts/clirun -l -d ${USER//./} -- security_agent'
+alias hotdog-clirun='cd ~/dd/dd-source && ~/dd/dd-source/domains/chatbot/scripts/clirun -l -d ${USER//./}-fast-dev -- security_agent'
+alias hotdog-deploy-raw='cd ~/dd/dd-source && ~/dd/dd-source/domains/chatbot/dev/hotdog-deploy'
+alias hotdog-deploy-slow='cd ~/dd/dd-source && ~/dd/dd-source/domains/chatbot/dev/hotdog-deploy chatbot-cli ${USER//./}'
+alias hotdog-deploy='cd ~/dd/dd-source && ~/dd/dd-source/domains/chatbot/dev/hotdog-deploy chatbot-cli ${USER//./} --legacy_fast --debug'
+alias hotdog-update-raw='cd ~/dd/dd-source && ~/dd/dd-source/domains/chatbot/dev/hotdog-update'
+alias hotdog-update-slow='cd ~/dd/dd-source && ~/dd/dd-source/domains/chatbot/dev/hotdog-update chatbot-cli ${USER//./}'
+alias hotdog-update='cd ~/dd/dd-source && ~/dd/dd-source/domains/chatbot/dev/hotdog-update chatbot-cli ${USER//./} --sec-agent --debug'
+alias hotdog-bash-slow='kubectl exec -it deployments/chatbot-cli-hotdog-${USER//./} -n chatbot -c chatbot-cli -- bash'
+alias hotdog-bash='kubectl exec -it deployments/chatbot-cli-hotdog-${USER//./}-fast-dev -n chatbot -c chatbot-cli -- bash'
+alias hotdog-delete-slow='kubectl delete deployment --namespace chatbot chatbot-cli-hotdog-${USER//./}'
+alias hotdog-delete='kubectl delete deployment --namespace chatbot chatbot-cli-hotdog-${USER//./}-fast-dev'
+alias hotdog-logs='open "https://app.datadoghq.com/logs?query=service%3Achatbot-cli%20kube_deployment%3Achatbot-cli-hotdog-${USER//./}-fast-dev"'
+alias hotdog-shell='kubectl -n chatbot exec -it deployment/chatbot-cli-hotdog-${USER//./}-fast-dev -- bash'
+alias hotdog-check-git-sha='cd ~/dd/dd-source && ~/dd/dd-source/domains/chatbot/dev/hotdog-check-git-sha chatbot-cli ${USER//./}-fast-dev'
+alias hotdog-pods='open "https://app.datadoghq.com/orchestration/explorer/pod?query=kube_deployment%3Achatbot-cli-hotdog-${USER//./}*"'
+alias hotdog-k-logs='kubectl logs -n chatbot deployment/chatbot-cli-hotdog-${USER//./}-fast-dev --tail=100'
+alias hotdog-k-pods='kubectl get pods --namespace chatbot -l app=chatbot-cli-hotdog-${USER//./}-fast-dev'
