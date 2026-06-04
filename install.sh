@@ -29,8 +29,13 @@ fi
 
 # --- Local dotfiles ---
 
-# 1. Install zsh-antigen (required for our local config)
-sudo apt-get update && sudo apt-get install -y curl zsh-antigen
+# 1. Install apt packages our local zsh config needs:
+#    - curl, zsh-antigen: required by zshrc.local's antigen setup
+#    - command-not-found: backs the oh-my-zsh command-not-found plugin. The
+#      package installs an apt hook that builds the command->package database on
+#      the next `apt update`, so we refresh again afterwards to populate it.
+sudo apt-get update && sudo apt-get install -y curl zsh-antigen command-not-found
+sudo apt-get update
 
 # 2. Symlink our antigen config as .zshrc.local
 mkdir -p "$HOME/.config/zsh"
