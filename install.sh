@@ -107,9 +107,8 @@ if command -v claude &>/dev/null; then
     "https://mcp.datadoghq.com/api/unstable/mcp-server/mcp?toolsets=core,software-delivery,error-tracking,profiling,widgets,data-observability" \
     -s user
   claude mcp remove atlassian -s user 2>/dev/null || true
-  claude mcp add --transport sse atlassian \
-    https://mcp.atlassian.com/v1/sse \
-    -s user
+  claude mcp add --transport http -s user atlassian \
+    https://mcp.atlassian.com/v1/mcp
   claude mcp remove datadog-google-workspace -s user 2>/dev/null || true
   claude mcp add --transport http datadog-google-workspace \
     https://google-workspace-mcp-server-834963730936.us-central1.run.app/mcp \
