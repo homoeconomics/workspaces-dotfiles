@@ -17,7 +17,7 @@ if [ ! -d "$DOTFRIEDRICE_PATH" ]; then
   # Seed dotfriedrice-config from the example, then append our overrides
   cp "$DOTFRIEDRICE_PATH/dotfriedrice-config.example" "$DOTFRIEDRICE_PATH/dotfriedrice-config"
   cat >> "$DOTFRIEDRICE_PATH/dotfriedrice-config" <<'EOF'
-export PACKAGES_APT_SKIP=("git-delta")
+export PACKAGES_APT_SKIP=("git-delta" "du-dust")
 export PACKAGES_AUTO_CONFIRM=1
 EOF
 
