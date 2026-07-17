@@ -50,8 +50,19 @@ fi
 ln -sf "$DOTFILES_DIR/.claude/settings.json" "$HOME/.claude/settings.json"
 ln -sf "$DOTFILES_DIR/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 
-# 4. Link nvim plugin overrides
-mkdir -p "$HOME/.config/nvim/lua/plugins"
+# 4. Link nvim plugin overrides.
+#    dotfriedrice makes ~/.config/nvim a SYMLINK to its own config
+#    (ln -fns "$DOTFRIEDRICE_PATH/.config/nvim" ~/.config/nvim), and our extra
+#    plugin specs are meant to land inside that config's lua/plugins/.
+#    Never `mkdir -p ~/.config/nvim/...`: if the symlink isn't in place yet that
+#    creates a real directory which shadows dotfriedrice's config, leaving nvim
+#    with no init.lua (space/which-key and every other mapping silently break).
+#    So: heal a stray real dir, (re)establish the symlink ourselves so this step
+#    is order-independent and idempotent, then drop the override into it.
+if [ -d "$HOME/.config/nvim" ] && [ ! -L "$HOME/.config/nvim" ]; then
+    rm -rf "$HOME/.config/nvim"
+fi
+ln -sfn "$DOTFRIEDRICE_PATH/.config/nvim" "$HOME/.config/nvim"
 ln -sf "$DOTFILES_DIR/.config/nvim/lua/plugins/dd-lsp.lua" "$HOME/.config/nvim/lua/plugins/dd-lsp.lua"
 
 # 5. Link tmux overrides over dotfriedrice's, then install any not-yet-cloned
