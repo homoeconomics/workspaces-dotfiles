@@ -61,6 +61,9 @@ let g:WhichKeyDesc_format = "<leader>cf Reformat Code"
 nmap <leader>cf <Action>(ReformatCode)
 vmap <leader>cf <Action>(ReformatCode)
 
+let g:WhichKeyDesc_code_structure = "<leader>cs Class Structure (popup)"
+nmap <leader>cs <Action>(FileStructurePopup)
+
 let g:WhichKeyDesc_goto_call_hierarchy = "gh Call Hierarchy"
 nmap gh <Action>(CallHierarchy)
 
