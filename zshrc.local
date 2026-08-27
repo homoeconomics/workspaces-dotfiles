@@ -1,3 +1,32 @@
+# PATH: user binaries and mise shims first, in EVERY interactive shell.
+#
+# dotfriedrice's .zprofile prepends these three, but zsh runs .zprofile for
+# LOGIN shells only. Its tmux.conf sets default-command "${SHELL}", so panes are
+# non-login and never re-run it — they inherit the PATH the tmux server froze at
+# startup instead. tmux is itself a mise-managed tool, so that snapshot came
+# through a mise shim with every mise/installs/*/bin already prepended. Net
+# effect: outside tmux `node` resolved via mise/shims (version-aware), inside
+# tmux it resolved to installs/node/<ver>/bin, pinned to whatever was current
+# when the server started.
+#
+# Re-asserting here fixes both: .zshrc.local is sourced on the last line of
+# .zshrc, so this is the final word on PATH, and it runs for login and non-login
+# shells alike. `typeset -U` makes it idempotent — re-prepending a path that
+# already appears later moves it to the front and drops the duplicate, so the
+# .zprofile copy becomes a no-op instead of a second entry.
+#
+# XDG_* come from .xdg.local, which is also login-only; panes inherit them from
+# the server, but the :- fallbacks hold if that chain ever breaks. The XDG spec
+# defines no variable for executables (only data/config/state/cache), so the two
+# bin dirs use HOME.
+typeset -U path PATH
+path=(
+  "${XDG_DATA_HOME:-${HOME}/.local/share}/mise/shims"
+  "${HOME}/.local/bin"
+  "${HOME}/.local/bin/local"
+  $path
+)
+
 # Antigen plugin manager.
 #
 # NOTE: antigen compiles the bundle list below into ~/.antigen/init.zsh and
