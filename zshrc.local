@@ -1,3 +1,18 @@
+# dogbrew on PATH.
+#
+# The workspace image intends to provide this: /etc/profile.d/00-workspace-env.sh
+# prepends /opt/dogbrew/bin and /opt/dogbrew/shims/bin. But 50-agent-workspace-env.sh
+# runs later in the same directory and does a wholesale `export PATH=<literal>`
+# rather than a prepend, wiping both (zz-ddagent-workspace-env.sh then restores
+# only ~/.local/bin). So dogbrew ends up on no shell's PATH at all.
+#
+# This must stay ABOVE the block below: `dogbrew init zsh` emits a single
+# `export PATH='<absolute snapshot>'` with its two dirs prepended, which would
+# otherwise become the last word on PATH and push dogbrew's shims ahead of
+# mise's. Running it first lets the block below re-assert mise shims and the
+# user bins on top, with `typeset -U` collapsing the duplicates.
+eval "$(/opt/dogbrew/bin/dogbrew init zsh)"
+
 # PATH: user binaries and mise shims first, in EVERY interactive shell.
 #
 # dotfriedrice's .zprofile prepends these three, but zsh runs .zprofile for
