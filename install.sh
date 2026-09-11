@@ -150,8 +150,9 @@ if command -v claude &>/dev/null; then
   # Plugins (user scope)
   claude plugin install dd@datadog-claude-plugins -s user
   claude plugin install odp-sql@datadog-claude-plugins -s user
-  claude plugin install feature@datadog-claude-plugins -s user
   claude plugin install marketplace-auto-update@datadog-claude-plugins -s user
+  claude plugin install diagrams@datadog-claude-plugins -s user
+  claude plugin install coach@datadog-claude-plugins -s user
   claude plugin install code-simplifier@claude-plugins-official -s user
   claude plugin install commit-commands@claude-plugins-official -s user
   claude plugin install gopls-lsp@claude-plugins-official -s user
