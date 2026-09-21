@@ -140,12 +140,14 @@ fi
 # 7. Install tools via mise
 mise use -g golangci-lint
 mise use -g lazygit
+mise use -g rtk
 
 # 8. Claude Code: marketplaces, plugins, and MCP servers
 if command -v claude &>/dev/null; then
   # Marketplaces
   claude plugin marketplace add anthropics/claude-plugins-official
   claude plugin marketplace add DataDog/claude-marketplace
+  claude plugin marketplace add DietrichGebert/ponytail
 
   # Plugins (user scope)
   claude plugin install dd@datadog-claude-plugins -s user
@@ -157,6 +159,7 @@ if command -v claude &>/dev/null; then
   claude plugin install commit-commands@claude-plugins-official -s user
   claude plugin install gopls-lsp@claude-plugins-official -s user
   claude plugin install superpowers@claude-plugins-official -s user
+  claude plugin install ponytail@ponytail -s user
 
   # MCP servers (HTTP, user scope)
   # Remove-then-add to stay idempotent (claude mcp add errors on duplicates)

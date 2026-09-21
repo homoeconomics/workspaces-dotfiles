@@ -10,10 +10,15 @@ Personal dotfiles layered on top of [nickjj/dotfriedrice](https://github.com/nic
 
 This will:
 - Clone and run nickjj/dotfriedrice (requires manual interaction)
-- Install zsh-antigen
-- Symlink the local zsh config
-- Link Claude settings
-- Install golangci-lint via mise
+- Install apt packages the local zsh config needs: `curl`, `zsh-antigen`,
+  `command-not-found`
+- Symlink the local zsh config (`.zshrc.local`, `.zprofile.local`)
+- Link Claude settings (`settings.json`, `CLAUDE.md`)
+- Link the nvim plugin overrides (`dd-lsp.lua`)
+- Link the tmux overrides and install any missing tmux plugins
+- Link the per-project neoconf files for `dd-go` and `dd-source`, if present
+- Install tools via mise: golangci-lint, lazygit, rtk
+- Set up Claude Code plugin marketplaces, plugins, and MCP servers
 
 ## IdeaVim
 
