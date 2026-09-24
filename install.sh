@@ -142,6 +142,12 @@ mise use -g golangci-lint
 mise use -g lazygit
 mise use -g rtk
 
+# Set up rtk for Claude Code. The hook and the @RTK.md import are already
+# committed in .claude/, so this just writes ~/.claude/RTK.md. --auto-patch
+# answers rtk's "Patch settings.json?" prompt with yes in case the hook ever
+# goes missing; rtk writes through the step-3 symlinks rather than replacing them.
+mise exec -- rtk init -g --auto-patch
+
 # 8. Claude Code: marketplaces, plugins, and MCP servers
 if command -v claude &>/dev/null; then
   # Marketplaces
