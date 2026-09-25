@@ -1,5 +1,4 @@
 {
-  "apiKeyHelper": "workspace_secret ANTHROPIC_APIKEY1",
   "env": {
     "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1",
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
@@ -63,5 +62,23 @@
   "forceLoginMethod": "console",
   "effortLevel": "xhigh",
   "skipDangerousModePermissionPrompt": true,
-  "theme": "dark"
+  "theme": "dark",
+  "enabledPlugins": {
+    "trajectory@trajectory": true,
+    "workspaces@datadog-claude-plugins": true
+  },
+  "extraKnownMarketplaces": {
+    "trajectory": {
+      "source": {
+        "source": "directory",
+        "path": "/home/bits/.trajectory/claude-marketplace"
+      }
+    },
+    "datadog-claude-plugins": {
+      "source": {
+        "source": "directory",
+        "path": "/home/bits/dd/claude-marketplace"
+      }
+    }
+  }
 }
