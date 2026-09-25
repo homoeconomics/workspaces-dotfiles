@@ -41,6 +41,7 @@
     ],
     "defaultMode": "plan"
   },
+  "model": "opus[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -59,30 +60,8 @@
     "command": "npx -y ccstatusline@latest",
     "padding": 0
   },
-  "enabledPlugins": {
-    "dd@datadog-claude-plugins": true,
-    "odp-sql@datadog-claude-plugins": true,
-    "code-simplifier@claude-plugins-official": true,
-    "commit-commands@claude-plugins-official": true,
-    "gopls-lsp@claude-plugins-official": true,
-    "feature@datadog-claude-plugins": true,
-    "superpowers@claude-plugins-official": true
-  },
-  "extraKnownMarketplaces": {
-    "claude-plugins-official": {
-      "source": {
-        "source": "github",
-        "repo": "anthropics/claude-plugins-official"
-      }
-    },
-    "datadog": {
-      "source": {
-        "source": "github",
-        "repo": "DataDog/claude-marketplace"
-      }
-    }
-  },
   "forceLoginMethod": "console",
   "effortLevel": "xhigh",
-  "model": "opus[1m]"
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark"
 }
