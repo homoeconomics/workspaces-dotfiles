@@ -1,18 +1,3 @@
-# dogbrew on PATH.
-#
-# The workspace image intends to provide this: /etc/profile.d/00-workspace-env.sh
-# prepends /opt/dogbrew/bin and /opt/dogbrew/shims/bin. But 50-agent-workspace-env.sh
-# runs later in the same directory and does a wholesale `export PATH=<literal>`
-# rather than a prepend, wiping both (zz-ddagent-workspace-env.sh then restores
-# only ~/.local/bin). So dogbrew ends up on no shell's PATH at all.
-#
-# This must stay ABOVE the block below: `dogbrew init zsh` emits a single
-# `export PATH='<absolute snapshot>'` with its two dirs prepended, which would
-# otherwise become the last word on PATH and push dogbrew's shims ahead of
-# mise's. Running it first lets the block below re-assert mise shims and the
-# user bins on top, with `typeset -U` collapsing the duplicates.
-eval "$(/opt/dogbrew/bin/dogbrew init zsh)"
-
 # PATH: user binaries and mise shims first, in EVERY interactive shell.
 #
 # dotfriedrice's .zprofile prepends these three, but zsh runs .zprofile for
@@ -34,13 +19,25 @@ eval "$(/opt/dogbrew/bin/dogbrew init zsh)"
 # the server, but the :- fallbacks hold if that chain ever breaks. The XDG spec
 # defines no variable for executables (only data/config/state/cache), so the two
 # bin dirs use HOME.
-typeset -U path PATH
+#
+# dogbrew: the workspace image means to add its dirs via
+# /etc/profile.d/00-workspace-env.sh, but 50-agent-workspace-env.sh later does a
+# wholesale `export PATH=<literal>`, wiping them. Provisioning also appends
+# dogbrew's setup line to ~/.zshrc and ~/.zprofile, but ~/.zshenv sets ZDOTDIR,
+# so zsh never reads those. The lines below are that setup inlined: dogbrew after
+# mise so mise shims win, fpath before `antigen apply` (which runs compinit),
+# and MANPATH's trailing colon keeps man searching the default paths.
+typeset -U path PATH fpath
 path=(
   "${XDG_DATA_HOME:-${HOME}/.local/share}/mise/shims"
   "${HOME}/.local/bin"
   "${HOME}/.local/bin/local"
+  /opt/dogbrew/shims/bin
+  /opt/dogbrew/bin
   $path
 )
+fpath=(/opt/dogbrew/share/zsh/site-functions $fpath)
+case ":${MANPATH-}:" in *:'/opt/dogbrew/share/man':*) ;; *) export MANPATH='/opt/dogbrew/share/man':${MANPATH-} ;; esac
 
 # Antigen plugin manager.
 #
