@@ -152,10 +152,21 @@ mise exec -- rtk init -g --auto-patch
 if command -v claude &>/dev/null; then
   # Marketplaces
   claude plugin marketplace add anthropics/claude-plugins-official
-  claude plugin marketplace add DataDog/claude-marketplace
+  # Workspace managed settings (and our .claude/settings.json) declare
+  # datadog-claude-plugins as a *directory* source at ~/dd/claude-marketplace,
+  # so adding it from GitHub always fails with "its network source differs from
+  # the one declared for it in settings" — which under `set -e` would abort
+  # every plugin and MCP step below. Provisioning is supposed to clone it
+  # there, but may not have (e.g. mid-migration to ddoghq), so clone it
+  # ourselves if missing and add the declared path.
+  if [ ! -d "$HOME/dd/claude-marketplace" ]; then
+    git clone https://github.com/ddoghq/claude-marketplace "$HOME/dd/claude-marketplace"
+  fi
+  claude plugin marketplace add "$HOME/dd/claude-marketplace"
   claude plugin marketplace add DietrichGebert/ponytail
 
   # Plugins (user scope)
+  claude plugin install workspaces@datadog-claude-plugins -s user
   claude plugin install dd@datadog-claude-plugins -s user
   claude plugin install odp-sql@datadog-claude-plugins -s user
   claude plugin install marketplace-auto-update@datadog-claude-plugins -s user
