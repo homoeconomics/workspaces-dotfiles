@@ -186,11 +186,11 @@ if command -v claude &>/dev/null; then
     -s user
   claude mcp remove datadog-staging -s user 2>/dev/null || true
   claude mcp add --transport http datadog-staging \
-    "https://mcp.datad0g.com/api/unstable/mcp-server/mcp" \
+    "https://mcp.datad0g.com/v1/mcp?toolsets=all" \
     -s user
   claude mcp remove datadog-prod -s user 2>/dev/null || true
   claude mcp add --transport http datadog-prod \
-    "https://mcp.datadoghq.com/api/unstable/mcp-server/mcp?toolsets=core,software-delivery,error-tracking,profiling,widgets,data-observability" \
+    "https://mcp.datadoghq.com/v1/mcp?toolsets=all" \
     -s user
   claude mcp remove atlassian -s user 2>/dev/null || true
   claude mcp add --transport http -s user atlassian \
