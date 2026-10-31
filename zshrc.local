@@ -23,21 +23,19 @@
 # dogbrew: the workspace image means to add its dirs via
 # /etc/profile.d/00-workspace-env.sh, but 50-agent-workspace-env.sh later does a
 # wholesale `export PATH=<literal>`, wiping them. Provisioning also appends
-# dogbrew's setup line to ~/.zshrc and ~/.zprofile, but ~/.zshenv sets ZDOTDIR,
-# so zsh never reads those. The lines below are that setup inlined: dogbrew after
-# mise so mise shims win, fpath before `antigen apply` (which runs compinit),
-# and MANPATH's trailing colon keeps man searching the default paths.
-typeset -U path PATH fpath
+# dogbrew's shell hook to ~/.zshrc and ~/.zprofile, but ~/.zshenv sets ZDOTDIR,
+# so zsh never reads those. The hook is copied here, ABOVE the path block: it
+# prepends dogbrew's dirs to the front, so the block must run after it to put
+# mise shims back on top. Its fpath entry must also precede `antigen apply`
+# (which runs compinit). man finds dogbrew's pages via PATH, so no MANPATH.
+[ -f "/opt/dogbrew/share/etc/dogbrew/init.zsh" ] && . "/opt/dogbrew/share/etc/dogbrew/init.zsh"
+typeset -U path PATH
 path=(
   "${XDG_DATA_HOME:-${HOME}/.local/share}/mise/shims"
   "${HOME}/.local/bin"
   "${HOME}/.local/bin/local"
-  /opt/dogbrew/shims/bin
-  /opt/dogbrew/bin
   $path
 )
-fpath=(/opt/dogbrew/share/zsh/site-functions $fpath)
-case ":${MANPATH-}:" in *:'/opt/dogbrew/share/man':*) ;; *) export MANPATH='/opt/dogbrew/share/man':${MANPATH-} ;; esac
 
 # Antigen plugin manager.
 #
