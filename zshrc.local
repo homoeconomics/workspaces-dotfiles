@@ -105,3 +105,49 @@ alias hotdog-check-git-sha='cd ~/dd/dd-source && ~/dd/dd-source/domains/chatbot/
 alias hotdog-pods='open "https://app.datadoghq.com/orchestration/explorer/pod?query=kube_deployment%3Achatbot-cli-hotdog-${USER//./}*"'
 alias hotdog-k-logs='kubectl logs -n chatbot deployment/chatbot-cli-hotdog-${USER//./}-fast-dev --tail=100'
 alias hotdog-k-pods='kubectl get pods --namespace chatbot -l app=chatbot-cli-hotdog-${USER//./}-fast-dev'
+
+# Ensure GitHub auth on first interactive SSH login of the day
+# https://datadoghq.atlassian.net/wiki/spaces/DEVX/pages/6319472788#Integrate-into-your-Dotfiles
+if [ -n "$SSH_CONNECTION" ] && [[ -o interactive ]]; then
+  github_auth_stamp="$HOME/.cache/ddtool_github_auth"
+  today=$(date +%Y-%m-%d)
+
+  if [ ! -f "$github_auth_stamp" ] || [ "$(cat "$github_auth_stamp")" != "$today" ]; then
+    github_auth_ok=true
+
+    for _gh_org in DataDog ddoghq; do
+      case "$_gh_org" in
+        DataDog) _gh_config_dir="$HOME/.config/gh" ;;
+        ddoghq)  _gh_config_dir="$HOME/.config/gh-shim-ddoghq" ;;
+      esac
+
+      if ! _org_token=$(ddtool auth github token --org "$_gh_org" --force 2>/dev/null); then
+        echo "Authenticating with GitHub (org: $_gh_org)..."
+        ddtool auth github login --org "$_gh_org" || {
+          github_auth_ok=false
+          continue
+        }
+        _org_token=$(ddtool auth github token --org "$_gh_org" --force 2>/dev/null) || {
+          github_auth_ok=false
+          continue
+        }
+      fi
+
+      if ! printf '%s' "$_org_token" |
+        DOGBREW_SHIMSKIP=1 GH_CONFIG_DIR="$_gh_config_dir" gh auth login --with-token; then
+        github_auth_ok=false
+      fi
+
+      unset _org_token _gh_config_dir
+    done
+
+    if [ "$github_auth_ok" = true ]; then
+      mkdir -p "$(dirname "$github_auth_stamp")"
+      echo "$today" > "$github_auth_stamp"
+    fi
+
+    unset _gh_org github_auth_ok
+  fi
+
+  unset github_auth_stamp today
+fi
