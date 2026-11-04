@@ -148,7 +148,13 @@ mise use -g rtk
 # goes missing; rtk writes through the step-3 symlinks rather than replacing them.
 mise exec -- rtk init -g --auto-patch
 
-# 8. Claude Code: marketplaces, plugins, and MCP servers
+# 8. Install ddtool via dogbrew. The workspace image pins an older ddtool in
+#    /usr/local/bin that lacks `ddtool auth github token --force`, which
+#    zshrc.local's daily GitHub auth refresh needs; without it the refresh
+#    fails and re-prompts on every new shell. /opt/dogbrew/bin is earlier on PATH.
+dogbrew install ddtool
+
+# 9. Claude Code: marketplaces, plugins, and MCP servers
 if command -v claude &>/dev/null; then
   # Marketplaces
   claude plugin marketplace add anthropics/claude-plugins-official

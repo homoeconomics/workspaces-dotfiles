@@ -18,6 +18,8 @@ This will:
 - Link the tmux overrides and install any missing tmux plugins
 - Link the per-project neoconf files for `dd-go` and `dd-source`, if present
 - Install tools via mise: golangci-lint, lazygit, rtk
+- Install the latest ddtool via dogbrew (the image's copy is too old for the
+  daily GitHub auth refresh in `zshrc.local`)
 - Set up Claude Code plugin marketplaces, plugins, and MCP servers
 
 ## IdeaVim
