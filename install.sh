@@ -154,7 +154,13 @@ mise exec -- rtk init -g --auto-patch
 #    fails and re-prompts on every new shell. /opt/dogbrew/bin is earlier on PATH.
 dogbrew install ddtool
 
-# 9. Claude Code: marketplaces, plugins, and MCP servers
+# 9. pi coding agent: golden config, packages, and rtk hook
+dogbrew install pi-setup && pi-setup
+pi install git:github.com/obra/superpowers
+pi install npm:@dietrichgebert/ponytail
+mise exec -- rtk init -g --agent pi
+
+# 10. Claude Code: marketplaces, plugins, and MCP servers
 if command -v claude &>/dev/null; then
   # Marketplaces
   claude plugin marketplace add anthropics/claude-plugins-official
