@@ -206,7 +206,7 @@ if command -v claude &>/dev/null; then
     -s user
   claude mcp remove atlassian -s user 2>/dev/null || true
   claude mcp add --transport http -s user atlassian \
-    https://mcp.atlassian.com/v1/mcp/authv2
+    https://mcp.atlassian.com/v2/mcp
   claude mcp remove datadog-google-workspace -s user 2>/dev/null || true
   claude mcp add --transport http datadog-google-workspace \
     https://google-workspace-mcp-server-834963730936.us-central1.run.app/mcp \
