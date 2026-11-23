@@ -158,11 +158,23 @@ dogbrew install ddtool
 #    .claude/CLAUDE.md imports the same AGENTS.md. Link it as AGENTS.md rather
 #    than CLAUDE.md: pi loads only the first match per directory and AGENTS.md
 #    outranks CLAUDE.md, so a stray AGENTS.md here would silently shadow ours.
+PI_AGENT_DIR="${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}"
 dogbrew install pi-setup && pi-setup
 pi install git:github.com/obra/superpowers
 pi install npm:@dietrichgebert/ponytail
+pi install npm:pi-memory
+# The checkout's installer prepares each package's npm dependencies first; a
+# bare `pi install <path>` would register the package without them.
+"$HOME/dd/datadog-pi-packages/scripts/install.sh" \
+  claude-marketplace nested-context secret-redactor dd-pi-packages-sync
+# claude-marketplace mirrors Claude's plugins into pi, so ponytail would load a
+# second time beside the npm copy above and pi would warn about the duplicate
+# skill names on every startup. Exclude it on the pi side only.
+pi_settings="$PI_AGENT_DIR/settings.json"
+jq '.claudeMarketplace.enabledPlugins["ponytail@ponytail"] = false' "$pi_settings" > "$pi_settings.tmp"
+mv "$pi_settings.tmp" "$pi_settings"
 mise exec -- rtk init -g --agent pi
-ln -sf "$DOTFILES_DIR/.pi/agent/AGENTS.md" "${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}/AGENTS.md"
+ln -sf "$DOTFILES_DIR/.pi/agent/AGENTS.md" "$PI_AGENT_DIR/AGENTS.md"
 
 # 10. Claude Code: marketplaces, plugins, and MCP servers
 if command -v claude &>/dev/null; then

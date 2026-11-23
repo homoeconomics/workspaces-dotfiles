@@ -22,8 +22,10 @@ This will:
 - Install the latest ddtool via dogbrew (the image's copy is too old for the
   daily GitHub auth refresh in `zshrc.local`)
 - Set up the pi coding agent: Datadog's golden config via `pi-setup`, the
-  superpowers and ponytail packages, the rtk extension, and the shared
-  `AGENTS.md` linked into `~/.pi/agent`
+  superpowers, ponytail, and pi-memory packages, the `claude-marketplace`,
+  `nested-context`, `secret-redactor`, and `dd-pi-packages-sync` packages from
+  datadog-pi-packages, the rtk extension, and the shared `AGENTS.md` linked
+  into `~/.pi/agent`
 - Set up Claude Code plugin marketplaces, plugins, and MCP servers
 
 ## IdeaVim
