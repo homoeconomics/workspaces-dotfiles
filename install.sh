@@ -154,11 +154,15 @@ mise exec -- rtk init -g --auto-patch
 #    fails and re-prompts on every new shell. /opt/dogbrew/bin is earlier on PATH.
 dogbrew install ddtool
 
-# 9. pi coding agent: golden config, packages, and rtk hook
+# 9. pi coding agent: golden config, packages, rtk hook, and global instructions.
+#    .claude/CLAUDE.md imports the same AGENTS.md. Link it as AGENTS.md rather
+#    than CLAUDE.md: pi loads only the first match per directory and AGENTS.md
+#    outranks CLAUDE.md, so a stray AGENTS.md here would silently shadow ours.
 dogbrew install pi-setup && pi-setup
 pi install git:github.com/obra/superpowers
 pi install npm:@dietrichgebert/ponytail
 mise exec -- rtk init -g --agent pi
+ln -sf "$DOTFILES_DIR/.pi/agent/AGENTS.md" "${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}/AGENTS.md"
 
 # 10. Claude Code: marketplaces, plugins, and MCP servers
 if command -v claude &>/dev/null; then

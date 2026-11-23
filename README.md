@@ -13,13 +13,17 @@ This will:
 - Install apt packages the local zsh config needs: `curl`, `zsh-antigen`,
   `command-not-found`
 - Symlink the local zsh config (`.zshrc.local`, `.zprofile.local`)
-- Link Claude settings (`settings.json`, `CLAUDE.md`)
+- Link Claude settings (`settings.json`, `CLAUDE.md`). `CLAUDE.md` imports the
+  agent guidelines from `.pi/agent/AGENTS.md`, which pi shares
 - Link the nvim plugin overrides (`dd-lsp.lua`)
 - Link the tmux overrides and install any missing tmux plugins
 - Link the per-project neoconf files for `dd-go` and `dd-source`, if present
 - Install tools via mise: golangci-lint, lazygit, rtk
 - Install the latest ddtool via dogbrew (the image's copy is too old for the
   daily GitHub auth refresh in `zshrc.local`)
+- Set up the pi coding agent: Datadog's golden config via `pi-setup`, the
+  superpowers and ponytail packages, the rtk extension, and the shared
+  `AGENTS.md` linked into `~/.pi/agent`
 - Set up Claude Code plugin marketplaces, plugins, and MCP servers
 
 ## IdeaVim
