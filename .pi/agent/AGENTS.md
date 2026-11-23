@@ -15,6 +15,7 @@ Example: `daniel.zhou/CWS-6211-signature-update`
 1. When creating a PR, you **may** include a flowchart or a sequence diagram in the PR description to help reviewers understand the changes. You can use Mermaid or other tools supported by GitHub.
 1. **Always** follow the PR template if there is one.
 1. **Never** commit PROMPT.md, PLAN.md, or similar working-document .md files that you use to communicate with me while working on the PR. Instead, you **may** include them in the PR description and hide them by default.
+1. After publishing a new PR, **always** make sure CI passes. Watch the checks (e.g. `gh pr checks <PR-number> --watch`). If a check fails, investigate the cause, push a fix, and repeat until all checks are green. Don't consider the PR done while CI is failing or still running.
 
 ## Code Style
 
