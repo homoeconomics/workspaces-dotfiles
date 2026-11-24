@@ -1,5 +1,15 @@
 # Project Guidelines
 
+## Worktrees
+
+**Never** make changes directly in a repo checkout. Before making any changes, use herdr to create a worktree and do all the work there:
+
+```
+herdr worktree create --branch <branch-name>
+```
+
+The checkout path is in the JSON output under `result.worktree.path` (e.g. `~/.herdr/worktrees/<repo>/<branch>`). `cd` into it before making changes.
+
 ## Git Branch Naming
 
 When creating a new git branch, use the format:
