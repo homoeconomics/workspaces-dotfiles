@@ -82,11 +82,9 @@ antigen apply
 ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLOCK
 ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BEAM
 
-# pi-memory summarizes each non-trivial pi session on quit with the session's
-# model, which the golden default-model package may have set to a premium one.
-# Use the golden static default instead; pi-memory falls back to the session
-# model if this one ever leaves models.json.
-export PI_MEMORY_EXIT_SUMMARY_MODEL="ai-gw-logical/glm-5-3"
+# Don't let pi-memory summarize each session into memory on quit; save to
+# memory explicitly instead.
+export PI_MEMORY_EXIT_SUMMARY=0
 
 # Custom aliases
 alias claude-yolo="claude --dangerously-skip-permissions --model 'opus[1m]' --effort xhigh"
